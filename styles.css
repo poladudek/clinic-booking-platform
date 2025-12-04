@@ -1,0 +1,43 @@
+.def-btn {
+  background-color: #007cff;
+  border: 2px solid #0025a1;
+  color: white;
+  border-radius: 15px;
+  padding: 8px 20px;
+}
+
+.def-btn-2{
+  background-color: #9cb3ff;
+  border: 2px solid #0025a1;
+  border-radius: 15px;
+  padding: 8px 20px;
+}
+
+.action-btn{
+  background-color: #f7ff82;
+  border: 2px solid #8d9600;
+  border-radius: 15px;
+  padding: 8px 20px;
+}
+
+.nav-btn{
+  background-color: #c0a7fc;
+  border: 2px solid #3000a1;
+  border-radius: 15px;
+  padding: 8px 20px;
+}
+
+.delete-btn{
+  background-color: #fa9898;
+  border: 2px solid #7a0000;
+  border-radius: 15px;
+  padding: 8px 20px;
+}
+
+.roboto-main{
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
