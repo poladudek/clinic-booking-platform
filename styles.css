@@ -1,0 +1,209 @@
+.nav-link{
+  text-decoration: none;
+  color: black;
+}
+
+.content-box{
+  display: inline-block;
+  background: linear-gradient(135deg, #FFFEFA, #FFF9E3);
+  border: 2px solid #000000;
+  border-radius: 8px;
+  padding: 20px 20px;
+}
+
+.roboto-main{
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+
+.def-btn {
+  background: linear-gradient(135deg, #7A99FF, #A2B7FC);
+  border: 2px solid #5a80cc;
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 0 #5a80cc;
+  transition:
+          transform 120ms ease-out,
+          box-shadow 120ms ease-out,
+          background-color 120ms ease-out;
+}
+
+.def-btn:hover,
+.def-btn:focus-visible {
+  background: linear-gradient(135deg, #8bb0ff, #BFCEFF);
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 4px 0 #5a80cc;
+  outline: none;
+}
+
+.def-btn:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: 0 1px 0 #4a6fb3;
+  background: linear-gradient(135deg, #6a8aee, #6a8aee);
+
+}
+
+.accept-btn {
+  /*background-color: #74FF52;*/
+  background: linear-gradient(135deg, #74FF52, #BCFFAB);
+  border: 2px solid #5ad83f;
+  border-radius: 20px;
+  padding: 10px 22px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 0 #5ad83f;
+  transition:
+          transform 120ms ease-out,
+          box-shadow 120ms ease-out,
+          background-color 120ms ease-out;
+}
+
+.accept-btn:hover,
+.accept-btn:focus-visible {
+  background: linear-gradient(135deg, #9CFF85, #D0FCC5);
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 4px 0 #5ad83f;
+  outline: none;
+}
+
+.accept-btn:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: 0 1px 0 #4ac32e;
+  background: linear-gradient(135deg, #64e741, #64e741);
+
+}
+
+.nav-btn {
+  background: linear-gradient(135deg, #B190F9, #C9B0FF);
+
+  border: 2px solid #9173d6;
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 0 #9173d6;
+  transition:
+          transform 120ms ease-out,
+          box-shadow 120ms ease-out,
+          background-color 120ms ease-out;
+}
+
+.nav-btn:hover,
+.nav-btn:focus-visible {
+  background: linear-gradient(135deg, #c2a4fa, #E4D4FF);
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 4px 0 #9173d6;
+  outline: none;
+}
+
+.nav-btn:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: 0 1px 0 #7a5fbf;
+  background: linear-gradient(135deg, #a17fe3, #a17fe3);
+
+}
+
+.active-btn {
+  background-color: #ffffff;
+  border: 2px solid #B190F9;
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 0 #B190F9;
+  transition:
+          transform 120ms ease-out,
+          box-shadow 120ms ease-out,
+          background-color 120ms ease-out,
+          border-color 120ms ease-out;
+  color: #000000;
+}
+
+.active-btn:hover,
+.active-btn:focus-visible {
+  background-color: #f8f5ff;
+  border-color: #c2a4fa;
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 4px 0 #B190F9;
+  outline: none;
+}
+
+.active-btn:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: 0 1px 0 #9173d6;
+  background-color: #f0edff;
+  border-color: #a17fe3;
+}
+
+.delete-btn {
+  background: linear-gradient(135deg, #FF7070, #FFABAB);
+  border: 2px solid #e04a4a;
+  border-radius: 20px;
+  padding: 10px 22px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 0 #e04a4a;
+  transition:
+          transform 120ms ease-out,
+          box-shadow 120ms ease-out,
+          background-color 120ms ease-out;
+  color: #000000;
+}
+
+.delete-btn:hover,
+.delete-btn:focus-visible {
+  background: linear-gradient(135deg, #ff7777, #FFC7C7);
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 4px 0 #e04a4a;
+  outline: none;
+}
+
+.delete-btn:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: 0 1px 0 #cc3d3d;
+  background: linear-gradient(135deg, #f05050, #f05050);
+
+}
+
+.action-btn {
+  background: linear-gradient(135deg, #C0C0B5, #E0E0D3);
+  border: 2px solid #a8a89d;
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 0 #a8a89d;
+  transition:
+          transform 120ms ease-out,
+          box-shadow 120ms ease-out,
+          background-color 120ms ease-out;
+  color: #000000;
+}
+
+.action-btn:hover,
+.action-btn:focus-visible {
+  background: linear-gradient(135deg, #d0d0c5, #F2F2E6);
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 4px 0 #a8a89d;
+  outline: none;
+}
+
+.action-btn:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: 0 1px 0 #8f8f85;
+  background-color: #b0b0a5;
+  background: linear-gradient(135deg, #b0b0a5, #b0b0a5);
+
+}
