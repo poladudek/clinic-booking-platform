@@ -5,35 +5,6 @@
   <title>System Rejestracji Wizyt - Pacjenci</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="layout.css">
-
-  <!-- dodatkowe style mogą zostać, jeśli są w wersji user-search -->
-  <style>
-    main {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .section-container.centered {
-      max-width: 600px;
-      width: 100%;
-      padding: 30px 25px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-      border-radius: 12px;
-    }
-
-    .section-container.centered h1,
-    .section-container.centered h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .accept-btn {
-      width: 100%;
-      padding: 12px 0;
-      font-size: 1.1rem;
-    }
-  </style>
 </head>
 <body>
 <!-- Górne menu z admin-user-search -->
@@ -42,9 +13,9 @@
     <img src="images/logo.png" alt="Logo" id="logo">
   </div>
   <div class="nav-btns">
-    <a class="nav-btn nav-link" href="index-patient.html">Strona główna</a>
-    <a class="nav-btn nav-link" href="admin-patient-search.html">Pacjenci</a>
-    <a class="nav-btn nav-link" href="admin-user-search.html">Użytkownicy</a>
+    <a class="nav-btn nav-link" href="index_admin.html">Strona główna</a>
+    <a class="active-btn nav-link" href="admin_patient_search.html">Pacjenci</a>
+    <a class="nav-btn nav-link" href="admin_user_search.html">Personel</a>
     <a class="nav-btn nav-link" href="changes-to-approve.html">Zmiany do zatwierdzenia</a>
   </div>
 </nav>
@@ -68,15 +39,15 @@
     <div class="usr-search-grid action-box">
       <div class="text-center">
         <h3>
-          <label for="search-patient-input">Wyszukaj pacjenta</label>
-          <input id="search-patient-input" type="search" name="search-patient">
+          <label for="search-patient-input">Szukaj: </label>
+          <input class="search-field" id="search-patient-input" type="search" name="search-patient">
         </h3>
       </div>
 
       <div class="text-center">
         <h3>
-          <label for="search-by-select">Szukaj po</label>
-          <select id="search-by-select" name="search-by">
+          <label for="search-by-select">Szukaj po: </label>
+          <select class="search-field" id="search-by-select" name="search-by">
             <option value="imie-nazwisko">Imię i nazwisko</option>
             <option value="data-urodzenia">Data urodzenia</option>
             <option value="numer-pesel">Numer PESEL</option>
@@ -86,8 +57,8 @@
 
       <div class="text-center">
         <h3>
-          <label for="sort-patient-select">Sortowanie</label>
-          <select id="sort-patient-select" name="sort-patient">
+          <label for="sort-patient-select">Sortowanie: </label>
+          <select class="search-field" id="sort-patient-select" name="sort-patient">
             <option value="nazwisko-az">Nazwisko - Alfabetycznie (A-Z)</option>
             <option value="nazwisko-za">Nazwisko - Alfabetycznie (Z-A)</option>
             <option value="data-urodzenia">Data urodzenia</option>
