@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>System Rejestracji Wizyt - Użytkownicy</title>
+</head>
+<body>
+
+<!-- Górny pasek nawigacyjny -->
+<header>
+  <div>
+    <span>SYSTEM REJESTRACJI WIZYT</span>
+  </div>
+
+  <div>
+    <a href="#" class="btn">Pacjenci</a>
+    <a href="#" class="btn">Użytkownicy</a>
+    <a href="#" class="btn">wyloguj</a>
+  </div>
+
+  <div>
+    <span>zalogowano jako Patryk Mirosławski (Administrator)</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- Nagłówek sekcji wyszukiwania -->
+  <section aria-labelledby="search-user-heading">
+    <div>
+      <h1 id="search-user-heading">Wyszukaj użytkownika:</h1>
+      <p>Niedziela, 16.11.2025 13:22</p>
+    </div>
+
+    <!-- Wyszukiwanie i sortowanie -->
+    <div>
+      <label for="search-user-input">Wyszukaj użytkownika</label>
+      <input id="search-user-input" type="search" name="search-user">
+    </div>
+
+    <div>
+      <label for="sort-user-select">Sortowanie:</label>
+      <select id="sort-user-select" name="sort-user">
+        <option value="nazwisko-az">Nazwisko - Alfabetycznie (A–Z)</option>
+        <option value="nazwisko-za">Nazwisko - Alfabetycznie (Z–A)</option>
+        <option value="data-urodzenia">Data urodzenia</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- Lista rezultatów -->
+  <section aria-labelledby="user-results-heading">
+    <h2 id="user-results-heading">Rezultaty:</h2>
+
+    <!-- Pojedynczy wynik użytkownika; skopiuj blok wg potrzeb -->
+    <article>
+      <header>
+        <p>
+          <strong>Imię i nazwisko:</strong>
+          <span>{Imię} {Nazwisko}</span>
+        </p>
+      </header>
+
+      <div>
+        <p>
+          <strong>Data urodzenia:</strong>
+          <span>DD/MM/YYYY</span>
+        </p>
+
+        <p>
+          <strong>Pesel:</strong>
+          <span>{Pesel użytkownika}</span>
+        </p>
+
+        <p>
+          <strong>Nr. Telefonu:</strong>
+          <span>+48 123 456 789</span>
+        </p>
+      </div>
+
+      <footer>
+        <a href="#" class="btn">Edytuj dane</a>
+        <a href="#" class="btn">Usuń użytkownika</a>
+      </footer>
+    </article>
+
+    <article>
+      <header>
+        <p>
+          <strong>Imię i nazwisko:</strong>
+          <span>{Imię} {Nazwisko}</span>
+        </p>
+      </header>
+
+      <div>
+        <p>
+          <strong>Data urodzenia:</strong>
+          <span>DD/MM/YYYY</span>
+        </p>
+
+        <p>
+          <strong>Pesel:</strong>
+          <span>{Pesel użytkownika}</span>
+        </p>
+
+        <p>
+          <strong>Nr. Telefonu:</strong>
+          <span>+48 123 456 789</span>
+        </p>
+      </div>
+
+      <footer>
+        <a href="#" class="btn">Edytuj dane</a>
+        <a href="#" class="btn">Usuń użytkownika</a>
+      </footer>
+    </article>
+
+    <article>
+      <header>
+        <p>
+          <strong>Imię i nazwisko:</strong>
+          <span>{Imię} {Nazwisko}</span>
+        </p>
+      </header>
+
+      <div>
+        <p>
+          <strong>Data urodzenia:</strong>
+          <span>DD/MM/YYYY</span>
+        </p>
+
+        <p>
+          <strong>Pesel:</strong>
+          <span>{Pesel użytkownika}</span>
+        </p>
+
+        <p>
+          <strong>Nr. Telefonu:</strong>
+          <span>+48 123 456 789</span>
+        </p>
+      </div>
+
+      <footer>
+        <a href="#" class="btn">Edytuj dane</a>
+        <a href="#" class="btn">Usuń użytkownika</a>
+      </footer>
+    </article>
+
+    <article>
+      <header>
+        <p>
+          <strong>Imię i nazwisko:</strong>
+          <span>{Imię} {Nazwisko}</span>
+        </p>
+      </header>
+
+      <div>
+        <p>
+          <strong>Data urodzenia:</strong>
+          <span>DD/MM/YYYY</span>
+        </p>
+
+        <p>
+          <strong>Pesel:</strong>
+          <span>{Pesel użytkownika}</span>
+        </p>
+
+        <p>
+          <strong>Nr. Telefonu:</strong>
+          <span>+48 123 456 789</span>
+        </p>
+      </div>
+
+      <footer>
+        <a href="#" class="btn">Edytuj dane</a>
+        <a href="#" class="btn">Usuń użytkownika</a>
+      </footer>
+    </article>
+
+  </section>
+
+</main>
+
+</body>
+</html>
