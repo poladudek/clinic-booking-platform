@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Lista lekarzy</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="layout.css">
+        <style>
+            body {
+                font-family: 'Roboto', sans-serif;
+                background: #f5f7fb;
+                margin: 0;
+            }
+
+
+            .section-container,
+            .doctor-list {
+                max-width: 1000px;
+                margin: auto;
+            }
+
+            .field {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                margin-bottom: 20px;
+                align-items: center;
+            }
+
+            .field label {
+                flex: 0 0 auto;
+                font-weight: 600;
+                color: #2a2a2a;
+            }
+
+            .field input.form-field {
+                flex: 1 1 auto;
+                padding: 10px 14px;
+                font-size: 15px;
+                border: 1px solid #bfc8e0;
+                border-radius: 8px;
+                transition: 0.2s;
+            }
+
+
+            .search-info {
+                font-size: 18px;
+                color: #333;
+                margin-bottom: 30px;
+                font-style: italic;
+            }
+
+            .doctor-list {
+                display: flex;
+                flex-direction: column;
+                gap: 25px;
+                margin-bottom: 50px;
+            }
+
+            .doctor-card {
+                display: flex;
+                background: #fff;
+                border-radius: 12px;
+                padding: 20px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                gap: 20px;
+            }
+
+            .doctor-photo img {
+                width: 110px;
+                height: 110px;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+
+            .doctor-info { 
+                flex: 1; 
+                display: flex; 
+                flex-direction: column; 
+                gap: 12px; 
+            }
+            .doctor-info h2 { 
+                margin: 0; 
+                font-size: 20px; 
+            }
+            .doctor-info .spec { 
+                color: #666; 
+                margin-top: 4px; 
+            }
+
+            .date-picker label {
+                font-size: 15px;
+                font-weight: 600;
+                color: #2a2a2a;
+            }
+            .date-picker input[type="date"] {
+                padding: 10px 14px;
+                border: 1px solid #bfc8e0;
+                border-radius: 8px;
+                font-size: 15px;
+                background: #f9fbff;
+                transition: 0.2s;
+            }
+            .date-picker input[type="date"]:hover {
+                border-color: #8aa3ff;
+            }
+
+            .time-container {
+                display: none;
+                margin-top: 10px;
+                padding: 10px;
+                background: #f7faff;
+                border: 1px solid #dbe6ff;
+                border-radius: 8px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .time-btn {
+                padding: 6px 12px;
+                background: #edf3ff;
+                border: 1px solid #cbd9ff;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: 0.2s;
+            }
+
+            .time-btn:hover { background: #dce7ff; }
+
+            .book-btn {
+                margin-top: 10px;
+                padding: 10px 16px;
+                font-size: 15px;
+                cursor: pointer;
+                transition: 0.2s;
+                width: fit-content;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="top-menu">
+        <div class="top-left"><img src="images/logo.png" id="logo" alt="Logo"></div>
+        <div class="top-buttons">
+            <button class="nav-btn">Strona główna</button>
+            <button class="nav-btn active-btn">Umów wizytę</button>
+            <button class="nav-btn">Zarządzaj wizytami</button>
+            <button class="nav-btn">Profil</button>
+        </div>
+    </div>
+
+    <div class="login-bar">
+        <div>Zalogowano jako <strong>Marek Nowak (Pacjent)</strong></div>
+        <button class="def-btn">Wyloguj</button>
+    </div>
+
+    <main style="margin-top: 50px;">
+        <div class="section-container">
+            <h1 style="padding-bottom: 20px;">Lista lekarzy</h1>
+            <div class="field">
+                <label for="search-input">Wyszukaj lekarza po nazwisku:</label>
+                <input id="search-input" class="form-field" type="text" placeholder="Wpisz nazwisko...">
+                <button class="action-btn">Szukaj</button>
+            </div>
+            <div class="search-info">Obecnie wyszukujesz po specjalizacji: <strong>Kardiolog</strong></div>
+
+            <div class="doctor-list">
+
+                <div class="doctor-card">
+                    <div class="doctor-photo"><img src="images/icon.png" alt="Dr Anna Kowalska"></div>
+                    <div class="doctor-info">
+                        <h2>Dr Anna Kowalska</h2>
+                        <div class="spec">Kardiolog</div>
+                        <div class="date-picker">
+                            <label>Wybierz dzień:</label>
+                            <input type="date" class="date-input" data-doctor="1">
+                        </div>
+                        <div class="time-container" id="times-1"></div>
+                        <button class="accept-btn book-btn">Umów wizytę</button>
+                    </div>
+                </div>
+
+                <div class="doctor-card">
+                    <div class="doctor-photo"><img src="images/icon.png" alt="Dr Piotr Nowak"></div>
+                    <div class="doctor-info">
+                        <h2>Dr Piotr Nowak</h2>
+                        <div class="spec">Kardiolog</div>
+                        <div class="date-picker">
+                            <label>Wybierz dzień:</label>
+                            <input type="date" class="date-input" data-doctor="2">
+                        </div>
+                        <div class="time-container" id="times-2"></div>
+                        <button class="accept-btn book-btn">Umów wizytę</button>
+                    </div>
+                </div>
+
+                <div class="doctor-card">
+                    <div class="doctor-photo"><img src="images/icon.png" alt="Dr Ewa Wiśniewska"></div>
+                    <div class="doctor-info">
+                        <h2>Dr Ewa Wiśniewska</h2>
+                        <div class="spec">Kardiolog</div>
+                        <div class="date-picker">
+                            <label>Wybierz dzień:</label>
+                            <input type="date" class="date-input" data-doctor="3">
+                        </div>
+                        <div class="time-container" id="times-3"></div>
+                        <button class="accept-btn book-btn">Umów wizytę</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+    function setMinDateAndShowTimes() {
+        const today = new Date();
+        today.setDate(today.getDate() + 1);
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        const minDateStr = `${yyyy}-${mm}-${dd}`;
+
+        document.querySelectorAll('.date-input').forEach(input => {
+            input.min = minDateStr;
+            input.value = minDateStr;
+            input.dispatchEvent(new Event('change'));
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', setMinDateAndShowTimes);
+
+    const doctorTimes = {
+        1: ["09:00", "10:00", "11:00", "12:00", "14:00", "16:00"],
+        2: ["11:20", "11:35", "11:50", "12:05", "12:20"],
+        3: ["08:30", "09:00", "09:30"]
+    };
+
+    document.querySelectorAll('.date-input').forEach(input => {
+        input.addEventListener('change', () => {
+            const doctorId = input.dataset.doctor;
+            const box = document.getElementById('times-' + doctorId);
+            const times = doctorTimes[doctorId];
+
+            box.style.display = 'flex';
+            box.innerHTML = "";
+
+            times.forEach(t => {
+                const btn = document.createElement('div');
+                btn.classList.add('time-btn');
+                btn.innerText = t;
+                box.appendChild(btn);
+            });
+        });
+    });
+    </script>
+
+    </body>
+</html>
