@@ -15,7 +15,7 @@ body {
 /* LOGO */
 /* ============================== */
 #logo {
-    height: 100px;
+    height: 60px;
     width: auto;
 }
 
@@ -127,6 +127,29 @@ body {
     margin-bottom: 10px;
 }
 
+.admin-logs-grid{
+  display: grid;
+  grid-template-columns: 2fr 7fr 1fr;
+  gap: 15px;
+  align-items: center;
+  margin: auto 20px;
+}
+
+.usr-search-result{
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr;
+  gap: 15px;
+  margin: auto 100px;
+}
+
+.usr-search-grid{
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr;
+  gap: 15px;
+  margin: auto 100px;
+}
+
+
 /* ============================== */
 /* POWIADOMIENIA */
 /* ============================== */
@@ -155,4 +178,21 @@ body {
         flex-wrap: wrap;
         text-align: center;
     }
+}
+/* ============================== */
+/* INNE */
+/* ============================== */
+.text-center{
+  text-align: center;
+}
+
+.search-field{
+  padding: 1px 5px;
+  height: 30px;
+  font-size: 15px;
+  border-radius: 10px;
+}
+
+#search-user-input, #search-patient-input{
+  width: 300px
 }
