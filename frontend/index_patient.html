@@ -4,77 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Rejestracji Wizyt</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="layout.css">
 </head>
 <body>
-    <div>
-        <div>
-            <div>
-                <img src="images/logo.png" alt="Logo" id="logo">
-            </div>
-            <div>
-                <button>Strona główna</button>
-                <button>Umów wizytę</button>
-                <button>Zarządzaj wizytami</button>
-                <button>Profil</button>
-            </div>
+    <nav class="top-menu">
+        <div class="top-left">
+            <img src="images/logo.png" alt="Logo" id="logo">
         </div>
-
-    <div>
+        <div class="nav-btns">
+            <a class="nav-btn nav-link" href="index_patient.html">Strona główna</a>
+            <a class="nav-btn nav-link" href="searchappointment1_patient.html">Umów wizytę</a>
+            <a class="nav-btn nav-link" href="#">Zarządzaj wizytami</a>
+            <a class="nav-btn nav-link" href="">Profil</a>
+        </div>
+    </nav>
+    <div class="login-bar">
         <div>Zalogowano jako Marek Nowak (Pacjent)</div>
-        <button>Wyloguj</button>
+        <button class="def-btn">Wyloguj</button>
     </div>
-    <div>
-        <div>
-            <h1>Dzień dobry Marek!</h1>
-            <div>Niedziela, 16.11.2025 13:22</div>
+    <div class="header-welcome">
+        <h1>Dzień dobry Marek!</h1>
+    </div>
+    <div class="section-container">
+        <h2>Najbliższa wizyta</h2>
+
+        <div class="visit-info">
+            <div><strong>Data:</strong> 25.11.2025</div>
+            <div><strong>Godzina:</strong> 10:30</div>
+            <div><strong>Lekarz:</strong> dr Anna Kowalska (kardiolog)</div>
+            <div><strong>Status:</strong> zaakceptowana</div>
         </div>
 
-        <div>
-            <h2>Najbliższa wizyta</h2>
-            <div>
-                <div><strong>Data:</strong> 25.11.2025</div>
-                <div><strong>Godzina:</strong> 10:30</div>
-                <div><strong>Lekarz:</strong> dr Anna Kowalska (kardiolog)</div>
-                <div><strong>Status:</strong> <span>zaakceptowana</span></div>
-            </div>
-            <div>
-                <button>Szczegóły</button>
-                <button>Przełóż</button>
-                <button>Anuluj</button>
-            </div>
-        </div>
-        
-        <div>
-            <h2>Szybkie akcje</h2>
-            <div>
-                <div>
-                    <h3>Umów wizytę</h3>
-                    <p>Znajdź lekarza, wybierz termin i zarezerwuj wizytę online.</p>
-                    <button>Przejdź</button>
-                </div>
-                <div>
-                    <h3>Zarządzaj wizytami</h3>
-                    <p>Przeglądaj nadchodzące wizyty, przełóż lub anuluj termin.</p>
-                    <button>Przejdź</button>
-                </div>
-                <div>
-                    <h3>Historia wizyt</h3>
-                    <p>Sprawdź zakończone wizyty i ich podsumowania.</p>
-                    <button>Przejdź</button>
-                </div>
-            </div>
-        </div>
-        
-        <div>
-            <h2>Powiadomienia</h2>
-            <ul>
-                <li>- Twoja wizyta u dr Jana Nowaka 20.11.2025 o 15:00 została odwołana przez lekarza.</li>
-                <li>- Potwierdź wizytę u dr Anny Kowalskiej – kliknij link wysłany na Twój e-mail.</li>
-            </ul>
+        <div class="visit-buttons">
+            <button class="action-btn">Szczegóły</button>
+            <button class="def-btn">Przełóż</button>
+            <button class="delete-btn">Anuluj</button>
         </div>
     </div>
-</div>
-```
+    <div class="section-container">
+        <h2>Szybkie akcje</h2>
 
+        <div class="quick-actions">
+
+            <div class="action-box content-box">
+                <h3>Umów wizytę</h3>
+                <p>Znajdź lekarza, wybierz termin i zarezerwuj wizytę online.</p>
+                <button class="def-btn">Przejdź</button>
+            </div>
+
+            <div class="action-box content-box">
+                <h3>Zarządzaj wizytami</h3>
+                <p>Przeglądaj nadchodzące wizyty, przełóż lub anuluj termin.</p>
+                <button class="def-btn">Przejdź</button>
+            </div>
+
+            <div class="action-box content-box">
+                <h3>Historia wizyt</h3>
+                <p>Sprawdź zakończone wizyty i ich podsumowania.</p>
+                <button class="def-btn">Przejdź</button>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="section-container notifications">
+        <h2>Powiadomienia</h2>
+        <ul>
+            <li>Twoja wizyta u dr Jana Nowaka 20.11.2025 o 15:00 została odwołana przez lekarza.</li>
+            <li>Potwierdź wizytę u dr Anny Kowalskiej – kliknij link wysłany na Twój e-mail.</li>
+        </ul>
+    </div>
 </body>
 </html>
