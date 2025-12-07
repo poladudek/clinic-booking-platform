@@ -19,6 +19,13 @@
   font-variation-settings: "wdth" 100;
 }
 
+.roboto-bold{
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
 
 .def-btn {
   background: linear-gradient(135deg, #7A99FF, #A2B7FC);
@@ -203,9 +210,7 @@
 .action-btn:active {
   transform: translateY(1px) scale(0.97);
   box-shadow: 0 1px 0 #8f8f85;
-  background-color: #b0b0a5;
   background: linear-gradient(135deg, #b0b0a5, #b0b0a5);
-
 }
 
 /*FORMS*/
