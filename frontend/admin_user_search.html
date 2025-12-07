@@ -39,9 +39,9 @@
     <img src="images/logo.png" alt="Logo" id="logo">
   </div>
   <div class="nav-btns">
-    <a class="nav-btn nav-link" href="index_patient.html">Strona główna</a>
-    <a class="nav-btn nav-link" href="searchappointment1_patient.html">Pacjenci</a>
-    <a class="nav-btn nav-link" href="#">Personel</a>
+    <a class="nav-btn nav-link" href="index_admin.html">Strona główna</a>
+    <a class="nav-btn nav-link" href="admin_patient_search.html">Pacjenci</a>
+    <a class="active-btn nav-link" href="admin_user_search.html">Personel</a>
     <a class="nav-btn nav-link" href="">Zmiany do zatwierdzenia</a>
   </div>
 </nav>
@@ -61,29 +61,29 @@
     <div class="usr-search-grid action-box">
       <div class="text-center">
         <h3>
-        <label for="search-user-input">Wyszukaj użytkownika</label>
-        <input id="search-user-input" type="search" name="search-user">
+        <label for="search-user-input">Szukaj: </label>
+        <input class="search-field" id="search-user-input" type="search" name="search-user">
         </h3>
       </div>
 
       <div class="text-center">
         <h3>
-        <label for="search-by-select">Szukaj po:</label>
-        <select id="search-by-select" name="search-by">
+        <label for="search-by-select">Szukaj po: </label>
+        <select class="search-field" id="search-by-select" name="search-by">
           <option value="imie-nazwisko">Imię i nazwisko</option>
-          <option value="data-urodzenia">Data urodzenia</option>
-          <option value="numer-pesel">Numer PESEL</option>
+          <option value="numer-telefonu">Numer telefonu</option>
+          <option value="id-pracownika">ID pracownika</option>
         </select>
         </h3>
       </div>
 
       <div class="text-center">
         <h3>
-        <label for="sort-user-select">Sortowanie:</label>
-        <select id="sort-user-select" name="sort-user">
+        <label for="sort-user-select">Sortowanie: </label>
+        <select class="search-field" id="sort-user-select" name="sort-user">
           <option value="nazwisko-az">Nazwisko - Alfabetycznie (A–Z)</option>
           <option value="nazwisko-za">Nazwisko - Alfabetycznie (Z–A)</option>
-          <option value="data-urodzenia">Data urodzenia</option>
+          <option value="id-pracownika">ID Pracownika</option>
         </select>
         </h3>
       </div>
