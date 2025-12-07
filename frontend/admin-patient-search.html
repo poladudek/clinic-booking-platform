@@ -2,181 +2,209 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <title>System Rejestracji Wizyt</title>
+  <title>System Rejestracji Wizyt - Pacjenci</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="layout.css">
+
+  <!-- dodatkowe style mogą zostać, jeśli są w wersji user-search -->
+  <style>
+    main {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .section-container.centered {
+      max-width: 600px;
+      width: 100%;
+      padding: 30px 25px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      border-radius: 12px;
+    }
+
+    .section-container.centered h1,
+    .section-container.centered h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .accept-btn {
+      width: 100%;
+      padding: 12px 0;
+      font-size: 1.1rem;
+    }
+  </style>
 </head>
 <body>
-
-<!-- Górny pasek nawigacyjny -->
-<header>
-  <div>
-    <span>SYSTEM REJESTRACJI WIZYT</span>
+<!-- Górne menu z admin-user-search -->
+<nav class="top-menu">
+  <div class="top-left">
+    <img src="images/logo.png" alt="Logo" id="logo">
   </div>
-
-  <div>
-    <button type="button">Pacjenci</button>
-    <button type="button">Użytkownicy</button>
-    <button type="button">wyloguj</button>
+  <div class="nav-btns">
+    <a class="nav-btn nav-link" href="index-patient.html">Strona główna</a>
+    <a class="nav-btn nav-link" href="admin-patient-search.html">Pacjenci</a>
+    <a class="nav-btn nav-link" href="admin-user-search.html">Użytkownicy</a>
+    <a class="nav-btn nav-link" href="changes-to-approve.html">Zmiany do zatwierdzenia</a>
   </div>
+</nav>
 
-  <div>
-    <span>zalogowano jako Patryk Mirosławski (Administrator)</span>
-  </div>
-</header>
+<div class="login-bar">
+  <div>zalogowano jako Patryk Mirosławski Administrator</div>
+  <button class="def-btn">Wyloguj</button>
+</div>
 
 <main>
-
-  <!-- Górny nagłówek z datą -->
-  <section aria-labelledby="search-patient-heading">
-    <div>
-      <h1 id="search-patient-heading">Wyszukaj Pacjenta:</h1>
-      <p>Niedziela, 16.11.2025 13:22</p>
+  <!-- Sekcja wyszukiwania – treść z patient-search, layout z user-search -->
+  <section>
+    <div class="header-welcome">
+      <h1>Wyszukaj Pacjenta</h1>
+      <!-- jeśli chcesz też datę, możesz odkomentować
+      <h1>Niedziela, 16.11.2025 13:22</h1>
+      -->
     </div>
 
-    <!-- Wyszukiwanie i sortowanie -->
-    <div>
-      <label for="search-input">Wyszukaj pacjenta</label>
-      <input id="search-input" type="search" name="search-patient">
-    </div>
+    <!-- Wyszukiwanie i sortowanie: pola jak w patient-search, siatka jak w user-search -->
+    <div class="usr-search-grid action-box">
+      <div class="text-center">
+        <h3>
+          <label for="search-patient-input">Wyszukaj pacjenta</label>
+          <input id="search-patient-input" type="search" name="search-patient">
+        </h3>
+      </div>
 
-    <div>
-      <label for="sort-select">Sortowanie:</label>
-      <select id="sort-select" name="sort-patient">
-        <option value="nazwisko-az">Nazwisko - Alfabetycznie (A–Z)</option>
-        <option value="nazwisko-za">Nazwisko - Alfabetycznie (Z–A)</option>
-        <option value="data-urodzenia">Data urodzenia</option>
-      </select>
+      <div class="text-center">
+        <h3>
+          <label for="search-by-select">Szukaj po</label>
+          <select id="search-by-select" name="search-by">
+            <option value="imie-nazwisko">Imię i nazwisko</option>
+            <option value="data-urodzenia">Data urodzenia</option>
+            <option value="numer-pesel">Numer PESEL</option>
+          </select>
+        </h3>
+      </div>
+
+      <div class="text-center">
+        <h3>
+          <label for="sort-patient-select">Sortowanie</label>
+          <select id="sort-patient-select" name="sort-patient">
+            <option value="nazwisko-az">Nazwisko - Alfabetycznie (A-Z)</option>
+            <option value="nazwisko-za">Nazwisko - Alfabetycznie (Z-A)</option>
+            <option value="data-urodzenia">Data urodzenia</option>
+          </select>
+        </h3>
+      </div>
     </div>
   </section>
 
-  <!-- Lista rezultatów -->
-  <section aria-labelledby="results-heading">
-    <h2 id="results-heading">Rezultaty:</h2>
+  <!-- Lista rezultatów – treść z patient-search, wygląd kart z user-search -->
+  <section>
+    <h2 class="header-welcome">Rezultaty</h2>
 
-    <!-- Pojedynczy wynik pacjenta; skopiuj blok tyle razy, ile potrzeba -->
+    <!-- rekord pacjenta 1 -->
     <article>
-      <header>
-        <p>
-          <strong>Imię i nazwisko:</strong>
-          <span>{Imię} {Nazwisko}</span>
-        </p>
-      </header>
-
-      <div>
-        <p>
-          <strong>Data urodzenia:</strong>
+      <div class="usr-search-result action-box">
+        <h3>
+          <strong>Imię i nazwisko: </strong>
+          <span>Imię Nazwisko</span>
+        </h3>
+        <h3>
+          <strong>Data urodzenia: </strong>
           <span>DD/MM/YYYY</span>
-        </p>
-
-        <p>
-          <strong>Pesel:</strong>
-          <span>{Pesel Pacjenta}</span>
-        </p>
-
-        <p>
-          <strong>Nr. Telefonu:</strong>
+        </h3>
+        <div></div>
+        <h3>
+          <strong>PESEL: </strong>
+          <span>PESEL Pacjenta</span>
+        </h3>
+        <h3>
+          <strong>Nr. Telefonu: </strong>
           <span>+48 123 456 789</span>
-        </p>
+        </h3>
+        <div>
+          <a href="#" class="def-btn nav-link">Wizyty</a>
+        </div>
       </div>
-
-      <footer>
-        <button type="button">Wizyty</button>
-      </footer>
     </article>
 
-    <!-- Przykładowe kolejne rekordy (można powielić ten sam układ) -->
+    <!-- rekord pacjenta 2 -->
     <article>
-      <header>
-        <p>
-          <strong>Imię i nazwisko:</strong>
-          <span>{Imię} {Nazwisko}</span>
-        </p>
-      </header>
-
-      <div>
-        <p>
-          <strong>Data urodzenia:</strong>
+      <div class="usr-search-result action-box">
+        <h3>
+          <strong>Imię i nazwisko: </strong>
+          <span>Imię Nazwisko</span>
+        </h3>
+        <h3>
+          <strong>Data urodzenia: </strong>
           <span>DD/MM/YYYY</span>
-        </p>
-
-        <p>
-          <strong>Pesel:</strong>
-          <span>{Pesel Pacjenta}</span>
-        </p>
-
-        <p>
-          <strong>Nr. Telefonu:</strong>
+        </h3>
+        <div></div>
+        <h3>
+          <strong>PESEL: </strong>
+          <span>PESEL Pacjenta</span>
+        </h3>
+        <h3>
+          <strong>Nr. Telefonu: </strong>
           <span>+48 123 456 789</span>
-        </p>
+        </h3>
+        <div>
+          <a href="#" class="def-btn nav-link">Wizyty</a>
+        </div>
       </div>
-
-      <footer>
-        <button type="button">Wizyty</button>
-      </footer>
     </article>
 
+    <!-- rekord pacjenta 3 -->
     <article>
-      <header>
-        <p>
-          <strong>Imię i nazwisko:</strong>
-          <span>{Imię} {Nazwisko}</span>
-        </p>
-      </header>
-
-      <div>
-        <p>
-          <strong>Data urodzenia:</strong>
+      <div class="usr-search-result action-box">
+        <h3>
+          <strong>Imię i nazwisko: </strong>
+          <span>Imię Nazwisko</span>
+        </h3>
+        <h3>
+          <strong>Data urodzenia: </strong>
           <span>DD/MM/YYYY</span>
-        </p>
-
-        <p>
-          <strong>Pesel:</strong>
-          <span>{Pesel Pacjenta}</span>
-        </p>
-
-        <p>
-          <strong>Nr. Telefonu:</strong>
+        </h3>
+        <div></div>
+        <h3>
+          <strong>PESEL: </strong>
+          <span>PESEL Pacjenta</span>
+        </h3>
+        <h3>
+          <strong>Nr. Telefonu: </strong>
           <span>+48 123 456 789</span>
-        </p>
+        </h3>
+        <div>
+          <a href="#" class="def-btn nav-link">Wizyty</a>
+        </div>
       </div>
-
-      <footer>
-        <button type="button">Wizyty</button>
-      </footer>
     </article>
 
+    <!-- rekord pacjenta 4 -->
     <article>
-      <header>
-        <p>
-          <strong>Imię i nazwisko:</strong>
-          <span>{Imię} {Nazwisko}</span>
-        </p>
-      </header>
-
-      <div>
-        <p>
-          <strong>Data urodzenia:</strong>
+      <div class="usr-search-result action-box">
+        <h3>
+          <strong>Imię i nazwisko: </strong>
+          <span>Imię Nazwisko</span>
+        </h3>
+        <h3>
+          <strong>Data urodzenia: </strong>
           <span>DD/MM/YYYY</span>
-        </p>
-
-        <p>
-          <strong>Pesel:</strong>
-          <span>{Pesel Pacjenta}</span>
-        </p>
-
-        <p>
-          <strong>Nr. Telefonu:</strong>
+        </h3>
+        <div></div>
+        <h3>
+          <strong>PESEL: </strong>
+          <span>PESEL Pacjenta</span>
+        </h3>
+        <h3>
+          <strong>Nr. Telefonu: </strong>
           <span>+48 123 456 789</span>
-        </p>
+        </h3>
+        <div>
+          <a href="#" class="def-btn nav-link">Wizyty</a>
+        </div>
       </div>
-
-      <footer>
-        <button type="button">Wizyty</button>
-      </footer>
     </article>
-
   </section>
-
 </main>
-
 </body>
 </html>

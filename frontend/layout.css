@@ -128,6 +128,25 @@ body {
 }
 
 /* ============================== */
+/* Rezultaty wyszukiwania */
+/* ============================== */
+
+.usr-search-result{
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr;
+  gap: 15px;
+  margin: auto 100px;
+}
+
+.usr-search-grid{
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr;
+  gap: 15px;
+  margin: auto 100px;
+}
+
+
+/* ============================== */
 /* POWIADOMIENIA */
 /* ============================== */
 .notifications ul {
@@ -155,4 +174,10 @@ body {
         flex-wrap: wrap;
         text-align: center;
     }
+}
+/* ============================== */
+/* INNE */
+/* ============================== */
+.text-center{
+  text-align: center;
 }
