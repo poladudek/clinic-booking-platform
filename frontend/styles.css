@@ -207,3 +207,22 @@
   background: linear-gradient(135deg, #b0b0a5, #b0b0a5);
 
 }
+
+/*FORMS*/
+.form-wrapper {
+  padding-top: 20px;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-field {
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+}
+

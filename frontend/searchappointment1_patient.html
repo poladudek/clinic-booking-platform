@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>System Rejestracji Wizyt - Umawianie wizyty</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="layout.css">
+        <style>
+            main {
+                display: flex;
+                justify-content: center;
+            }
+            .section-container.centered {
+                max-width: 600px;
+                width: 100%;
+                padding: 30px 25px;
+                box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+                border-radius: 12px;
+            }
+
+            .section-container.centered h1,
+            .section-container.centered h2 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .accept-btn {
+                width: 100%;
+                padding: 12px 0;
+                font-size: 1.1rem;
+            }
+        </style>
+    </head>
+    <body class="roboto-main">
+        <nav class="top-menu">
+            <div class="top-left">
+                <img src="images/logo.png" alt="Logo" id="logo">
+            </div>
+            <div class="nav-btns">
+                <a class="nav-btn nav-link" href="index_patient.html">Strona główna</a>
+                <a class="nav-btn nav-link" href="searchappointment1_patient.html">Umów wizytę</a>
+                <a class="nav-btn nav-link" href="#">Zarządzaj wizytami</a>
+                <a class="nav-btn nav-link" href="">Profil</a>
+            </div>
+        </nav>
+        <div class="login-bar">
+            <div>Zalogowano jako Marek Nowak (Pacjent)</div>
+            <button class="def-btn">Wyloguj</button>
+        </div>
+        <main>
+            <div class="section-container centered" style="margin-top: 100px;">
+                <h1>Umawianie wizyty</h1>
+
+                <div class="form-wrapper">
+                    <div class="field">
+                        <label>Wybierz rodzaj wizyty:</label>
+                        <select class="form-field">
+                            <option>Lekarz internista</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label>Wybierz typ wizyty:</label>
+                        <select class="form-field">
+                            <option>Badanie</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <div class="flex" style="display: flex; justify-content: flex-start; align-items: center; gap: px;">
+                            <input type="checkbox" id="urgent">
+                            <label for="urgent">Czy wizyta ma być umówiona w trybie pilnym?</label>
+                        </div>
+                        <div style="margin-top: 10px;">
+                            Uwaga! Po wybraniu wizyty w trybie pilnym konieczne będzie załączenie numeru skierowania w celu jego weryfikacji.
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <button class="accept-btn">Szukaj wizyty</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
