@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>System Rejestracji Wizyt</title>
+</head>
+<body>
+
+<!-- Górny pasek nawigacyjny -->
+<header>
+  <div>
+    <span>SYSTEM REJESTRACJI WIZYT</span>
+  </div>
+
+  <div>
+    <button type="button">Pacjenci</button>
+    <button type="button">Użytkownicy</button>
+    <button type="button">wyloguj</button>
+  </div>
+
+  <div>
+    <span>zalogowano jako Patryk Mirosławski (Administrator)</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- Górny nagłówek z datą -->
+  <section aria-labelledby="search-patient-heading">
+    <div>
+      <h1 id="search-patient-heading">Wyszukaj Pacjenta:</h1>
+      <p>Niedziela, 16.11.2025 13:22</p>
+    </div>
+
+    <!-- Wyszukiwanie i sortowanie -->
+    <div>
+      <label for="search-input">Wyszukaj pacjenta</label>
+      <input id="search-input" type="search" name="search-patient">
+    </div>
+
+    <div>
+      <label for="sort-select">Sortowanie:</label>
+      <select id="sort-select" name="sort-patient">
+        <option value="nazwisko-az">Nazwisko - Alfabetycznie (A–Z)</option>
+        <option value="nazwisko-za">Nazwisko - Alfabetycznie (Z–A)</option>
+        <option value="data-urodzenia">Data urodzenia</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- Lista rezultatów -->
+  <section aria-labelledby="results-heading">
+    <h2 id="results-heading">Rezultaty:</h2>
+
+    <!-- Pojedynczy wynik pacjenta; skopiuj blok tyle razy, ile potrzeba -->
+    <article>
+      <header>
+        <p>
+          <strong>Imię i nazwisko:</strong>
+          <span>{Imię} {Nazwisko}</span>
+        </p>
+      </header>
+
+      <div>
+        <p>
+          <strong>Data urodzenia:</strong>
+          <span>DD/MM/YYYY</span>
+        </p>
+
+        <p>
+          <strong>Pesel:</strong>
+          <span>{Pesel Pacjenta}</span>
+        </p>
+
+        <p>
+          <strong>Nr. Telefonu:</strong>
+          <span>+48 123 456 789</span>
+        </p>
+      </div>
+
+      <footer>
+        <button type="button">Wizyty</button>
+      </footer>
+    </article>
+
+    <!-- Przykładowe kolejne rekordy (można powielić ten sam układ) -->
+    <article>
+      <header>
+        <p>
+          <strong>Imię i nazwisko:</strong>
+          <span>{Imię} {Nazwisko}</span>
+        </p>
+      </header>
+
+      <div>
+        <p>
+          <strong>Data urodzenia:</strong>
+          <span>DD/MM/YYYY</span>
+        </p>
+
+        <p>
+          <strong>Pesel:</strong>
+          <span>{Pesel Pacjenta}</span>
+        </p>
+
+        <p>
+          <strong>Nr. Telefonu:</strong>
+          <span>+48 123 456 789</span>
+        </p>
+      </div>
+
+      <footer>
+        <button type="button">Wizyty</button>
+      </footer>
+    </article>
+
+    <article>
+      <header>
+        <p>
+          <strong>Imię i nazwisko:</strong>
+          <span>{Imię} {Nazwisko}</span>
+        </p>
+      </header>
+
+      <div>
+        <p>
+          <strong>Data urodzenia:</strong>
+          <span>DD/MM/YYYY</span>
+        </p>
+
+        <p>
+          <strong>Pesel:</strong>
+          <span>{Pesel Pacjenta}</span>
+        </p>
+
+        <p>
+          <strong>Nr. Telefonu:</strong>
+          <span>+48 123 456 789</span>
+        </p>
+      </div>
+
+      <footer>
+        <button type="button">Wizyty</button>
+      </footer>
+    </article>
+
+    <article>
+      <header>
+        <p>
+          <strong>Imię i nazwisko:</strong>
+          <span>{Imię} {Nazwisko}</span>
+        </p>
+      </header>
+
+      <div>
+        <p>
+          <strong>Data urodzenia:</strong>
+          <span>DD/MM/YYYY</span>
+        </p>
+
+        <p>
+          <strong>Pesel:</strong>
+          <span>{Pesel Pacjenta}</span>
+        </p>
+
+        <p>
+          <strong>Nr. Telefonu:</strong>
+          <span>+48 123 456 789</span>
+        </p>
+      </div>
+
+      <footer>
+        <button type="button">Wizyty</button>
+      </footer>
+    </article>
+
+  </section>
+
+</main>
+
+</body>
+</html>
