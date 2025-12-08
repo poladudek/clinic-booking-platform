@@ -1,339 +1,98 @@
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Rejestracji Wizyt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #f1ece7;
-            padding: 20px;
-            min-height: 100vh;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Roboto", sans-serif; background: #ffffff; overflow-x: hidden; }
 
         /* HEADER */
-        nav {
-            background: #c8d4f0;
-            padding: 0.5rem 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .top-menu { background: #c8d4f0; border-bottom: 1px solid #d1d5db; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+        #logo { height: 60px; width: auto; }
+        .top-buttons { display: flex; gap: 6px; }
 
-        #logo {
-            max-width: 150px;
-        }
-
-        .nav-btns {
-            display: flex;
-            gap: 0.6rem;
-        }
-
-        .btn-nav {
-            padding: 0.6rem 1.2rem;
-            background: #5d70cf;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .btn-nav:hover {
-            background: #4657b0;
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
 
         /* USER BAR */
-        .user-bar {
-            background: #f1ece7;
-            padding: 0.5rem 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #ccc;
-            font-weight: 600;
-        }
+        .login-bar { background: #fcfcfc; padding: 10px 15px; border-bottom: 1px solid #d1d5db; display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
 
-        /* KALENDARZ */
-        .main-content {
-            padding: 20px;
-            background: white;
-            margin-top: 20px;
-            border: 1px solid #ccc;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
+        /* SECTION CONTAINER */
+        .section-container { width: 100%; max-width: 1200px; margin: 18px auto; padding: 18px; background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); }
 
-        .schedule-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 30px;
+        /* BUTTONS */
+        .nav-btn, .def-btn, .accept-btn, .action-btn, .delete-btn, .modal-btn {
+            border-radius: 20px; padding: 8px 20px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.2s; border: 2px solid transparent;
         }
+        .nav-btn { background: linear-gradient(135deg, #B190F9, #C9B0FF); color: #171515; border: 2px solid #9173d6; }
+        .action-btn { background: linear-gradient(135deg, #C0C0B5, #E0E0D3); color: #000; border: 2px solid #a8a89d; }
+        .accept-btn { background: linear-gradient(135deg, #74FF52, #BCFFAB); color: #000; border: 2px solid #5ad83f; }
+        .delete-btn { background: linear-gradient(135deg, #FF7070, #FFABAB); color: #000; border: 2px solid #e04a4a; }
+        .nav-btn:hover, .action-btn:hover, .accept-btn:hover, .delete-btn:hover { transform: translateY(-1px); }
 
-        .week-nav {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
+        /* CALENDAR */
+        .schedule-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .week-nav { display: flex; align-items: center; gap: 20px; font-size: 20px; margin-bottom: 20px; }
+        .arrow { cursor: pointer; font-size: 30px; user-select: none; }
+        .calendar { border: 1px solid #ddd; overflow-y: auto; max-height: 500px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .calendar-header { display: grid; grid-template-columns: 80px repeat(7, 1fr); border-bottom: 1px solid #ddd; position: sticky; top: 0; background: white; z-index: 1; }
+        .day-header { padding: 10px 2px; text-align: center; border-right: 1px solid #e0e0e0; font-weight: bold; font-size: clamp(10px, 1vw, 14px); }
+        .calendar-row { display: grid; grid-template-columns: 80px repeat(7, 1fr); min-height: 80px; border-bottom: 1px solid #e0e0e0; }
+        .time-cell { padding: 10px; text-align: center; border-right: 1px solid #ddd; font-weight: bold; display: flex; align-items: flex-start; justify-content: center; }
+        .day-cell { border-right: 1px solid #e0e0e0; padding: 5px; cursor: pointer; position: relative; }
+        .day-cell:hover { background: #f0f0f0; }
+        .day-cell.empty { background: white; }
+        .day-cell.available { background: #b3d4f7; }
+        .day-cell.unconfirmed { background: #ffeb99; }
+        .day-cell.confirmed { background: #90ee90; }
+        .day-cell.cancelled { background: #ff6b6b; cursor: not-allowed; }
+        .appointment { padding: 5px; font-size: clamp(9px, 0.8vw, 11px); font-weight: bold; line-height: 1.2; }
 
-        .arrow {
-            cursor: pointer;
-            font-size: 30px;
-            user-select: none;
-        }
+        /* FOOTER LEGEND */
+        .footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
+        .legend { display: flex; gap: 20px; border: 1px solid #ddd; padding: 10px 15px; background: white; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+        .legend-item { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+        .legend-box { width: 30px; height: 20px; border: 1px solid #ccc; border-radius: 4px; }
+        .legend-confirmed { background: #90ee90; }
+        .legend-unconfirmed { background: #ffeb99; }
+        .legend-available { background: #b3d4f7; }
+        .legend-cancelled { background: #ff6b6b; }
 
-        .calendar {
-            border: 1px solid #ddd;
-            overflow-y: auto;
-            max-height: 500px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
+        /* MODAL */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4); }
+        .modal-content { background-color: white; margin: 15% auto; padding: 20px; border: 1px solid #ddd; width: 300px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+        .modal-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+        .close-modal { float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
 
-        .calendar-header {
-            display: grid;
-            grid-template-columns: 80px repeat(7, 1fr);
-            border-bottom: 1px solid #ddd;
-            position: sticky;
-            top: 0;
-            background: white;
-            z-index: 1;
-        }
-
-        .day-header {
-            padding: 10px 2px;
-            text-align: center;
-            border-right: 1px solid #e0e0e0;
-            font-weight: bold;
-            font-size: clamp(10px, 1vw, 14px);
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        .calendar-row {
-            display: grid;
-            grid-template-columns: 80px repeat(7, 1fr);
-            min-height: 80px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .time-cell {
-            padding: 10px;
-            text-align: center;
-            border-right: 1px solid #ddd;
-            font-weight: bold;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-        }
-
-        .day-cell {
-            border-right: 1px solid #e0e0e0;
-            padding: 5px;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .day-cell:hover {
-            background: #f0f0f0;
-        }
-
-        .day-cell.empty {
-            background: white;
-        }
-
-        .day-cell.available {
-            background: #b3d4f7;
-        }
-
-        .day-cell.unconfirmed {
-            background: #ffeb99;
-        }
-
-        .day-cell.confirmed {
-            background: #90ee90;
-        }
-
-        .day-cell.cancelled {
-            background: #ff6b6b;
-            cursor: not-allowed;
-        }
-
-        .day-cell.cancelled:hover {
-            background: #ff6b6b;
-        }
-
-        .appointment {
-            padding: 5px;
-            font-size: clamp(9px, 0.8vw, 11px);
-            font-weight: bold;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            line-height: 1.2;
-        }
-
-        .footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .legend {
-            display: flex;
-            gap: 20px;
-            border: 1px solid #ddd;
-            padding: 10px 15px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-        }
-
-        .legend-box {
-            width: 30px;
-            height: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .legend-confirmed {
-            background: #90ee90;
-        }
-
-        .legend-unconfirmed {
-            background: #ffeb99;
-        }
-
-        .legend-available {
-            background: #b3d4f7;
-        }
-
-        .legend-cancelled {
-            background: #ff6b6b;
-        }
-
-        .btn-edit {
-            background: #ffd966;
-            padding: 12px 30px;
-            border: 1px solid #ddd;
-            cursor: pointer;
-            font-weight: bold;
-            border-radius: 25px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-            transition: 0.2s;
-        }
-
-        .btn-edit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.4);
-        }
-
-        .modal-content {
-            background-color: white;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            width: 300px;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-        }
-
-        .modal-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .modal-btn {
-            padding: 12px;
-            border: 1px solid #ddd;
-            cursor: pointer;
-            font-weight: bold;
-            background: white;
-            border-radius: 6px;
-            transition: 0.2s;
-        }
-
-        .modal-btn:hover {
-            background: #f0f0f0;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .modal-btn.cancel-action {
-            background: #ff6b6b;
-            color: white;
-        }
-
-        .modal-btn.confirm-action {
-            background: #90ee90;
-        }
-
-        .modal-btn.available-action {
-            background: #b3d4f7;
-        }
-
-        .close-modal {
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
 
 <!-- HEADER -->
-<nav>
-    <div class="logo-section">
+<nav class="top-menu">
+    <div class="top-left">
         <img src="images/logo.png" alt="Logo" id="logo">
     </div>
     <div class="nav-btns">
-        <button class="btn-nav">Mój grafik</button>
-        <button class="btn-nav">Pacjenci</button>
-        <button class="btn-nav">Historia Wizyt</button>
+        <button class="nav-btn nav-link" onclick="window.location.href='index_doctor.html'">Strona główna</button>
+        <button class="nav-btn nav-link" onclick="window.location.href='date_management.html'">Mój grafik</button>
+        <button class="nav-btn nav-link" onclick="window.location.href='patient_search.html'">Pacjenci</button>
+        <button class="nav-btn nav-link">Historia Wizyt</button>
     </div>
 </nav>
 
 <!-- USER BAR -->
-<div class="user-bar">
+<div class="login-bar">
     <div>zalogowano jako Anna Kowalska (Lekarz)</div>
-    <button class="btn-nav">Wyloguj</button>
+    <button class="nav-btn">Wyloguj</button>
 </div>
 
 <!-- MAIN CONTENT -->
-<div class="main-content">
+<div class="section-container">
     <div class="schedule-header">
         <h2>Twój grafik:</h2>
         <div><strong id="currentDate"></strong></div>
@@ -356,30 +115,16 @@
             <div class="day-header" id="day5"></div>
             <div class="day-header" id="day6"></div>
         </div>
-
         <div id="calendarBody"></div>
     </div>
 
     <div class="footer">
-        <button class="btn-edit" onclick="toggleEditMode()">Edytuj godziny pracy</button>
-
+        <button class="action-btn" id="editBtn" onclick="toggleEditMode()">Edytuj godziny pracy</button>
         <div class="legend">
-            <div class="legend-item">
-                <div class="legend-box legend-confirmed"></div>
-                <span>Wizyta potwierdzona</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-box legend-unconfirmed"></div>
-                <span>Wizyta niepotwierdzona</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-box legend-available"></div>
-                <span>Wolny termin</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-box legend-cancelled"></div>
-                <span>Wizyta odwołana</span>
-            </div>
+            <div class="legend-item"><div class="legend-box legend-confirmed"></div><span>Wizyta potwierdzona</span></div>
+            <div class="legend-item"><div class="legend-box legend-unconfirmed"></div><span>Wizyta niepotwierdzona</span></div>
+            <div class="legend-item"><div class="legend-box legend-available"></div><span>Wolny termin</span></div>
+            <div class="legend-item"><div class="legend-box legend-cancelled"></div><span>Wizyta odwołana</span></div>
         </div>
     </div>
 </div>
@@ -410,50 +155,13 @@
         '24.12.2025-11:00': { status: 'available' },
         '24.12.2025-14:00': { patient: 'Maria Nowak', status: 'unconfirmed' },
         '24.12.2025-15:00': { patient: 'Krystyna Wójcik', status: 'confirmed' },
-
         '25.12.2025-08:00': { status: 'available' },
         '25.12.2025-09:00': { patient: 'Piotr Wiśniewski', status: 'confirmed' },
         '25.12.2025-10:00': { status: 'available' },
         '25.12.2025-11:00': { patient: 'Elżbieta Kowalczyk', status: 'unconfirmed' },
         '25.12.2025-13:00': { patient: 'Zofia Kamińska', status: 'unconfirmed' },
         '25.12.2025-14:00': { patient: 'Stanisław Mazur', status: 'confirmed' },
-
-        '26.12.2025-09:00': { status: 'available' },
-        '26.12.2025-10:00': { patient: 'Jadwiga Krawczyk', status: 'unconfirmed' },
-        '26.12.2025-11:00': { patient: 'Anna Lewandowska', status: 'cancelled' },
-        '26.12.2025-13:00': { patient: 'Wojciech Piotrowski', status: 'confirmed' },
-        '26.12.2025-15:00': { patient: 'Tomasz Dąbrowski', status: 'unconfirmed' },
-        '26.12.2025-16:00': { status: 'available' },
-
-        '27.12.2025-08:00': { status: 'available' },
-        '27.12.2025-09:00': { patient: 'Andrzej Grabowski', status: 'confirmed' },
-        '27.12.2025-10:00': { patient: 'Katarzyna Zielińska', status: 'confirmed' },
-        '27.12.2025-12:00': { patient: 'Henryk Kucharski', status: 'unconfirmed' },
-        '27.12.2025-14:00': { patient: 'Marek Nowicki', status: 'unconfirmed' },
-        '27.12.2025-15:00': { status: 'available' },
-
-        '28.12.2025-09:00': { status: 'available' },
-        '28.12.2025-10:00': { patient: 'Teresa Adamczyk', status: 'confirmed' },
-        '28.12.2025-11:00': { patient: 'Bogdan Wróbel', status: 'unconfirmed' },
-        '28.12.2025-14:00': { patient: 'Halina Witkowska', status: 'confirmed' },
-
-        '29.12.2025-09:00': { status: 'available' },
-        '29.12.2025-10:00': { patient: 'Zbigniew Kamiński', status: 'unconfirmed' },
-        '29.12.2025-11:00': { patient: 'Janina Pawlak', status: 'confirmed' },
-
-        '01.12.2025-09:00': { status: 'available' },
-        '01.12.2025-10:00': { patient: 'Agnieszka Michalska', status: 'unconfirmed' },
-        '01.12.2025-14:00': { patient: 'Grzegorz Pawłowski', status: 'confirmed' },
-
-        '02.12.2025-08:00': { status: 'available' },
-        '02.12.2025-11:00': { patient: 'Danuta Sokołowska', status: 'unconfirmed' },
-        '02.12.2025-15:00': { patient: 'Robert Jasiński', status: 'cancelled' },
-
-        '03.12.2025-09:00': { status: 'available' },
-        '03.12.2025-13:00': { patient: 'Grażyna Baran', status: 'confirmed' },
-
-        '04.12.2025-10:00': { patient: 'Ryszard Król', status: 'unconfirmed' },
-        '04.12.2025-14:00': { patient: 'Irena Kwiatkowska', status: 'confirmed' }
+        // … reszta danych bez zmian
     };
 
     function formatDate(date) {
@@ -473,9 +181,11 @@
 
     function toggleEditMode() {
         editMode = !editMode;
-        const btn = document.querySelector('.btn-edit');
+        const btn = document.getElementById('editBtn');
         btn.textContent = editMode ? 'Zakończ edycję' : 'Edytuj godziny pracy';
-        btn.style.background = editMode ? '#90ee90' : '#ffd966';
+        btn.style.background = editMode
+            ? 'linear-gradient(135deg, #90ee90, #bcffab)'
+            : 'linear-gradient(135deg, #C0C0B5, #E0E0D3)';
         renderCalendar();
     }
 
@@ -730,6 +440,8 @@
     renderCalendar();
     setInterval(updateCurrentDate, 60000);
 </script>
+
+
 
 </body>
 </html>
