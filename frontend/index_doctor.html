@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Lekarza</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="layout.css">
+    <style>
+        /* Style specyficzne tylko dla tej strony, których nie ma w layout.css */
+        .warning-btn {
+            background: linear-gradient(135deg, #FF9999, #FFCCCC);
+            border: 2px solid #ff6666;
+            border-radius: 20px; padding: 8px 20px; font-weight: 600; cursor: pointer;
+            box-shadow: 0 2px 0 #ff6666;
+            color: black;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* Flexbox dla przycisków wewnątrz kafelka */
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+<nav class="top-menu">
+    <div class="top-left">
+        <img src="images/logo.png" alt="Logo" id="logo">
+    </div>
+    <div class="nav-btns">
+        <button class="active-btn nav-link" onclick="window.location.href='index_doctor.html'">Strona główna</button>
+        <button class="nav-btn nav-link">Mój grafik</button>
+        <button class="nav-btn nav-link" onclick="window.location.href='patient_search.html'">Pacjenci</button>
+        <button class="nav-btn nav-link">Historia Wizyt</button>
+    </div>
+</nav>
+
+<div class="login-bar">
+    <div>Zalogowano jako Anna Kowalska (Lekarz)</div>
+    <button class="def-btn">Wyloguj</button>
+</div>
+
+<div class="header-welcome">
+    <h1>Dzień dobry Anna!</h1>
+</div>
+
+<div class="section-container">
+    <h2>Najbliższe wizyty</h2>
+    <div class="quick-actions" id="upcoming-visits-container">
+    </div>
+</div>
+
+<div class="section-container">
+    <h2>Szybkie akcje</h2>
+    <div class="quick-actions" id="quick-actions-container">
+    </div>
+</div>
+
+<script>
+    // --- DANE I GENEROWANIE ---
+
+    const quickActions = [
+        { title: "Przejdź do grafiku", desc: "Zobacz swoje godziny pracy oraz umówione wizyty i zarządzaj nimi", btnText: "Przejdź" },
+        { title: "Wyszukaj pacjenta", desc: "Przeglądaj pacjentów, historię ich wizyt oraz ich dokumentację", btnText: "Przejdź", link: "patient_search.html" },
+        { title: "Najnowsze wizyty", desc: "Sprawdź ostatnio dodane wizyty", btnText: "Przejdź" }
+    ];
+
+    const visits = [
+        { date: "Pon. 17.11.2025", time: "16:00", patient: "Marcin Biały" },
+        { date: "Pon. 17.11.2025", time: "16:30", patient: "Jan Kowalski" },
+        { date: "Pon. 17.11.2025", time: "17:00", patient: "Artur Nowak" }
+    ];
+
+    // Renderowanie Szybkich Akcji -> używamy klasy .action-box z layout.css
+    const actionsContainer = document.getElementById('quick-actions-container');
+    quickActions.forEach(action => {
+        const linkAction = action.link ? `onclick="window.location.href='${action.link}'"` : '';
+
+        const html = `
+                <div class="action-box">
+                    <h3>${action.title}</h3>
+                    <p>${action.desc}</p>
+                    <button class="def-btn" ${linkAction}>${action.btnText}</button>
+                </div>
+            `;
+        actionsContainer.innerHTML += html;
+    });
+
+    // Renderowanie Wizyt -> również używamy .action-box dla spójności
+    const visitsContainer = document.getElementById('upcoming-visits-container');
+    visits.forEach(visit => {
+        const html = `
+                <div class="action-box">
+                    <h3>${visit.date}</h3>
+                    <p><strong>Godzina:</strong> ${visit.time}</p>
+                    <p><strong>Pacjent:</strong> ${visit.patient}</p>
+                    <div class="card-actions">
+                        <button class="action-btn" onclick="window.location.href='visit_details.html'">Szczegóły</button>
+                        <button class="warning-btn">Odwołaj</button>
+                    </div>
+                </div>
+            `;
+        visitsContainer.innerHTML += html;
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wyszukaj Pacjenta</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="layout.css">
+    <style>
+        /* Style specyficzne dla wyszukiwarki */
+        .search-bar-container {
+            display: flex; justify-content: space-between; align-items: center;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            background: #FAFAFA;
+            padding: 15px 25px;
+            margin-bottom: 30px;
+        }
+        .search-input {
+            border: 1px solid #ccc; border-radius: 5px; padding: 10px; width: 300px;
+            background: #ffffff; font-size: 1rem;
+        }
+        .search-input:focus::placeholder { color: transparent; }
+
+        /* Grupa kontrolek po prawej stronie paska */
+        .controls-right {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .sort-select {
+            padding: 10px; border-radius: 5px; border: 1px solid #ccc; background: #ffffff;
+            cursor: pointer;
+        }
+
+        .results-list { display: flex; flex-direction: column; gap: 15px; }
+
+        .patient-card {
+            display: flex; justify-content: space-between; align-items: center;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 20px 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .patient-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .patient-data-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            width: 75%;
+            gap: 20px;
+        }
+
+        .patient-data-col { font-size: 1.05rem; line-height: 1.6; }
+        .patient-data-col strong { font-weight: 800; display: inline-block; width: 140px; }
+
+        /* Paginacja */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            margin-top: 30px;
+        }
+        .page-btn {
+            background: white; border: 1px solid #ccc; border-radius: 5px;
+            padding: 8px 14px; cursor: pointer;
+            transition: background 0.2s;
+            min-width: 40px;
+        }
+        .page-btn.active {
+            background: #c8d4f0;
+            border-color: #aaa;
+            font-weight: bold;
+        }
+        .page-btn:hover:not(.active):not(:disabled) { background: #eee; }
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+    </style>
+</head>
+<body>
+<nav class="top-menu">
+    <div class="top-left">
+        <img src="images/logo.png" alt="Logo" id="logo">
+    </div>
+    <div class="nav-btns">
+        <button class="nav-btn nav-link" onclick="window.location.href='index_doctor.html'">Strona główna</button>
+        <button class="nav-btn nav-link">Mój grafik</button>
+        <button class="active-btn nav-link">Pacjenci</button>
+        <button class="nav-btn nav-link">Historia Wizyt</button>
+    </div>
+</nav>
+<div class="login-bar">
+    <div>Zalogowano jako Anna Kowalska (Lekarz)</div>
+    <button class="def-btn">Wyloguj</button>
+</div>
+
+<div class="section-container">
+    <div class="header-welcome" style="padding: 0 0 20px 0;">
+        <h1>Wyszukaj Pacjenta</h1>
+    </div>
+
+    <div class="search-bar-container">
+        <input type="text" class="search-input" placeholder="Wpisz nazwisko lub PESEL...">
+
+        <div class="controls-right">
+            <div>
+                <span>Pokaż: </span>
+                <select class="sort-select" id="rows-per-page">
+                    <option value="5">5</option>
+                    <option value="10" selected>10</option>
+                    <option value="20">20</option>
+                </select>
+            </div>
+
+            <div>
+                <span>Sortowanie: </span>
+                <select class="sort-select">
+                    <option>Nazwisko - Alfabetycznie (A-Z)</option>
+                    <option>Data urodzenia</option>
+                    <option>Najnowsze wizyty</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <h2>Rezultaty:</h2>
+
+    <div class="results-list" id="patients-list">
+    </div>
+
+    <div class="pagination" id="pagination-wrapper">
+    </div>
+</div>
+
+<script>
+    // Dane pacjentów
+    const patients = [
+        { id: 1, firstName: "Jan", lastName: "Kowalski", dob: "10.12.1990", pesel: "90121032332", phone: "+48 123 456 789" },
+        { id: 2, firstName: "Anna", lastName: "Nowak", dob: "05.05.1985", pesel: "85050512345", phone: "+48 600 700 800" },
+        { id: 3, firstName: "Piotr", lastName: "Zieliński", dob: "22.01.1978", pesel: "78012298765", phone: "+48 500 400 300" },
+        { id: 4, firstName: "Maria", lastName: "Wiśniewska", dob: "14.11.2000", pesel: "00111456789", phone: "+48 111 222 333" },
+        { id: 5, firstName: "Krzysztof", lastName: "Krawczyk", dob: "08.09.1965", pesel: "65090811223", phone: "+48 666 555 444" },
+        { id: 6, firstName: "Ewa", lastName: "Bem", dob: "23.02.1970", pesel: "70022399887", phone: "+48 777 888 999" },
+        { id: 7, firstName: "Tomasz", lastName: "Iksiński", dob: "12.07.1995", pesel: "95071200112", phone: "+48 501 502 503" },
+        { id: 8, firstName: "Julia", lastName: "Kamińska", dob: "30.03.1992", pesel: "92033044556", phone: "+48 601 602 603" },
+        { id: 9, firstName: "Michał", lastName: "Anioł", dob: "15.08.1980", pesel: "80081577777", phone: "+48 555 000 555" },
+        { id: 10, firstName: "Karolina", lastName: "Południowa", dob: "01.01.1999", pesel: "99010122222", phone: "+48 799 799 799" },
+        { id: 11, firstName: "Adam", lastName: "Małysz", dob: "03.12.1977", pesel: "77120300123", phone: "+48 102 102 102" },
+        { id: 12, firstName: "Robert", lastName: "Lewandowski", dob: "21.08.1988", pesel: "88082100999", phone: "+48 999 888 777" }
+    ];
+
+    // --- ZMIENNE STANU ---
+    const listContainer = document.getElementById('patients-list');
+    const paginationWrapper = document.getElementById('pagination-wrapper');
+    const rowsPerPageSelect = document.getElementById('rows-per-page');
+
+    let currentPage = 1;
+    let rowsPerPage = 10; // Domyślna wartość
+
+    // --- FUNKCJE ---
+
+    function displayList(items, wrapper, rows_per_page, page) {
+        wrapper.innerHTML = "";
+        page--; // Tablice są indeksowane od 0
+
+        let start = rows_per_page * page;
+        let end = start + rows_per_page;
+        let paginatedItems = items.slice(start, end);
+
+        paginatedItems.forEach(p => {
+            const html = `
+                    <div class="patient-card">
+                        <div class="patient-data-group">
+                            <div class="patient-data-col">
+                                <div><strong>Imię i nazwisko:</strong> ${p.firstName} ${p.lastName}</div>
+                                <div><strong>Data urodzenia:</strong> ${p.dob}</div>
+                            </div>
+                            <div class="patient-data-col">
+                                <div><strong>Pesel:</strong> ${p.pesel}</div>
+                                <div><strong>Nr. Telefonu:</strong> ${p.phone}</div>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="def-btn">Wizyty</button>
+                        </div>
+                    </div>
+                `;
+            wrapper.innerHTML += html;
+        });
+    }
+
+    function setupPagination(items, wrapper, rows_per_page) {
+        wrapper.innerHTML = "";
+
+        let page_count = Math.ceil(items.length / rows_per_page);
+
+        // Przycisk "Poprzednia"
+        let prevBtn = document.createElement('button');
+        prevBtn.innerHTML = '&lt;';
+        prevBtn.classList.add('page-btn');
+        if (currentPage === 1) prevBtn.disabled = true;
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                updateView();
+            }
+        });
+        wrapper.appendChild(prevBtn);
+
+        // Przyciski numeryczne
+        for (let i = 1; i < page_count + 1; i++) {
+            let btn = paginationButton(i);
+            wrapper.appendChild(btn);
+        }
+
+        // Przycisk "Następna"
+        let nextBtn = document.createElement('button');
+        nextBtn.innerHTML = '&gt;';
+        nextBtn.classList.add('page-btn');
+        if (currentPage === page_count) nextBtn.disabled = true;
+        nextBtn.addEventListener('click', () => {
+            if (currentPage < page_count) {
+                currentPage++;
+                updateView();
+            }
+        });
+        wrapper.appendChild(nextBtn);
+    }
+
+    function paginationButton(page) {
+        let button = document.createElement('button');
+        button.innerText = page;
+        button.classList.add('page-btn');
+
+        if (currentPage === page) button.classList.add('active');
+
+        button.addEventListener('click', function () {
+            currentPage = page;
+            updateView();
+        });
+
+        return button;
+    }
+
+    function updateView() {
+        displayList(patients, listContainer, rowsPerPage, currentPage);
+        setupPagination(patients, paginationWrapper, rowsPerPage);
+    }
+
+    // --- OBSŁUGA ZDARZEŃ ---
+
+    rowsPerPageSelect.addEventListener('change', function (e) {
+        rowsPerPage = Number(e.target.value);
+        currentPage = 1; // Reset do pierwszej strony
+        updateView();
+    });
+
+    // Inicjalizacja
+    updateView();
+
+</script>
+</body>
+</html>
