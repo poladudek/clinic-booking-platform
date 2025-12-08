@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Rejestracji Wizyt - Porównanie harmonogramów</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="layout.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif;
+      background: #f1ece7;
+      min-height: 100vh;
+    }
+    .header {
+      background: #c8d4f0;
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    .comparison-container {
+      margin: 20px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .schedule-table {
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+      min-width: 600px;
+      flex: 1;
+    }
+    .table-header {
+      background: #5d70cf;
+      color: white;
+      padding: 15px;
+      font-weight: bold;
+      text-align: center;
+    }
+    .old-header { background: #6c757d; }
+    .new-header { background: #28a745; }
+    .calendar {
+      border: 1px solid #ddd;
+      overflow-x: auto;
+      max-height: 600px;
+    }
+    .calendar-header {
+      display: grid;
+      grid-template-columns: 80px repeat(7, 1fr);
+      border-bottom: 1px solid #ddd;
+      position: sticky;
+      top: 0;
+      background: white;
+      z-index: 1;
+    }
+    .day-header {
+      padding: 12px 8px;
+      text-align: center;
+      border-right: 1px solid #e0e0e0;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .calendar-row {
+      display: grid;
+      grid-template-columns: 80px repeat(7, 1fr);
+      min-height: 60px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .time-cell {
+      padding: 8px;
+      text-align: center;
+      border-right: 1px solid #ddd;
+      font-weight: bold;
+      background: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+    }
+    .day-cell {
+      border-right: 1px solid #e0e0e0;
+      padding: 12px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 60px;
+    }
+    .day-cell:last-child {
+      border-right: none;
+    }
+
+    /* Wszystkie komórki z danymi = niebieskie */
+    .old .day-cell.available,
+    .old .day-cell.unconfirmed,
+    .old .day-cell.confirmed,
+    .old .day-cell.cancelled,
+    .new .day-cell.available,
+    .new .day-cell.unconfirmed,
+    .new .day-cell.confirmed,
+    .new .day-cell.cancelled {
+      background: #0066cc !important;
+    }
+
+    /* Tylko puste komórki pozostają szare */
+    .old .day-cell.empty,
+    .new .day-cell.empty {
+      background: #f8f9fa;
+    }
+
+    @media (max-width: 1200px) {
+      .comparison-container { flex-direction: column; }
+      .schedule-table { min-width: auto; }
+    }
+  </style>
+</head>
+<body>
+<nav class="top-menu">
+  <div class="top-left">
+    <img src="images/logo.png" alt="Logo" id="logo">
+  </div>
+  <div class="nav-btns">
+    <a class="nav-btn nav-link" href="index_admin.html">Strona główna</a>
+    <a class="nav-btn nav-link" href="admin_patient_search.html">Pacjenci</a>
+    <a class="nav-btn nav-link" href="admin_user_search.html">Personel</a>
+    <a class="active-btn nav-link" href="date_acceptance.html">Zmiany do zatwierdzenia</a>
+  </div>
+</nav>
+
+<div class="login-bar">
+  <div>zalogowano jako Patryk Mirosławski Administrator</div>
+  <button class="def-btn">Wyloguj</button>
+</div>
+
+<div class="header-welcome">
+  <h1>Porównaj i zatwierdź zmiany</h1>
+</div>
+
+<div class="comparison-container">
+  <div class="schedule-table old-table" id="schedule1">
+    <div class="table-header old-header">STARY harmonogram</div>
+    <div class="calendar old" id="calendar1"></div>
+  </div>
+  <div class="schedule-table new-table" id="schedule2">
+    <div class="table-header new-header">NOWY harmonogram</div>
+    <div class="calendar new" id="calendar2"></div>
+  </div>
+</div>
+
+<div class="text-center">
+  <button class="accept-btn" onclick="acceptChanges()">Zaakceptuj zmiany</button>
+  <button class="delete-btn" onclick="rejectChanges()">Odrzuć zmiany</button>
+</div>
+
+<script>
+    // Dane oryginalne z pliku [file:1]
+    const originalAppointments = {
+        '24.12.2025-0800': { status: 'available' },
+        '24.12.2025-0900': { patient: 'Michał Kowalczyk', status: 'unconfirmed' },
+        '24.12.2025-1000': { patient: 'Jan Kowalski', status: 'confirmed' },
+        '24.12.2025-1100': { status: 'available' },
+        '24.12.2025-1400': { patient: 'Maria Nowak', status: 'unconfirmed' },
+        '24.12.2025-1500': { patient: 'Krystyna Wójcik', status: 'confirmed' },
+        '25.12.2025-0800': { status: 'available' },
+        '25.12.2025-0900': { patient: 'Piotr Wiśniewski', status: 'confirmed' },
+        '25.12.2025-1000': { status: 'available' },
+        '25.12.2025-1100': { patient: 'Elżbieta Kowalczyk', status: 'unconfirmed' },
+        '25.12.2025-1300': { patient: 'Zofia Kamińska', status: 'unconfirmed' },
+        '25.12.2025-1400': { patient: 'Stanisław Mazur', status: 'confirmed' },
+        '26.12.2025-0900': { status: 'available' },
+        '26.12.2025-1000': { patient: 'Jadwiga Krawczyk', status: 'unconfirmed' },
+        '26.12.2025-1100': { patient: 'Anna Lewandowska', status: 'cancelled' },
+        '26.12.2025-1300': { patient: 'Wojciech Piotrowski', status: 'confirmed' },
+        '26.12.2025-1500': { patient: 'Tomasz Dąbrowski', status: 'unconfirmed' },
+        '26.12.2025-1600': { status: 'available' },
+        '27.12.2025-0800': { status: 'available' },
+        '27.12.2025-0900': { patient: 'Andrzej Grabowski', status: 'confirmed' },
+        '27.12.2025-1000': { patient: 'Katarzyna Zielińska', status: 'confirmed' },
+        '27.12.2025-1200': { patient: 'Henryk Kucharski', status: 'unconfirmed' },
+        '27.12.2025-1400': { patient: 'Marek Nowicki', status: 'unconfirmed' },
+        '27.12.2025-1500': { status: 'available' },
+        '28.12.2025-0900': { status: 'available' },
+        '28.12.2025-1000': { patient: 'Teresa Adamczyk', status: 'confirmed' },
+        '28.12.2025-1100': { patient: 'Bogdan Wróbel', status: 'unconfirmed' },
+        '28.12.2025-1400': { patient: 'Halina Witkowska', status: 'confirmed' },
+        '29.12.2025-0900': { status: 'available' },
+        '29.12.2025-1000': { patient: 'Zbigniew Kamiński', status: 'unconfirmed' },
+        '29.12.2025-1100': { patient: 'Janina Pawlak', status: 'confirmed' }
+    };
+
+    // Nowy harmonogram z zmianami
+    const newAppointments = {
+        '24.12.2025-0800': { status: 'available' },
+        '24.12.2025-0900': null,
+        '24.12.2025-1000': { patient: 'Jan Kowalski', status: 'confirmed' },
+        '24.12.2025-1100': null,
+        '24.12.2025-1400': null,
+        '24.12.2025-1500': { status: 'available' },
+        '25.12.2025-0800': null,
+        '25.12.2025-0900': { patient: 'Piotr Wiśniewski', status: 'confirmed' },
+        '25.12.2025-1000': { status: 'available' },
+        '25.12.2025-1100': null,
+        '25.12.2025-1300': { patient: 'Zofia Kamińska', status: 'confirmed' },
+        '25.12.2025-1400': { patient: 'Stanisław Mazur', status: 'confirmed' },
+        '26.12.2025-0900': { status: 'available' },
+        '26.12.2025-1000': null,
+        '26.12.2025-1100': { patient: 'Anna Lewandowska', status: 'cancelled' },
+        '26.12.2025-1300': { patient: 'Wojciech Piotrowski', status: 'confirmed' },
+        '26.12.2025-1500': null,
+        '26.12.2025-1600': { status: 'available' },
+        '29.12.2025-1100': { patient: 'Janina Pawlak', status: 'unconfirmed' }
+    };
+
+    const hours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
+    const dayNames = ['Pon.', 'Wt.', 'Śr.', 'Czw.', 'Pt.', 'Sob.', 'Ndz.'];
+
+    const weekStart = new Date('2025-12-24');
+    const dates = [];
+    for (let i = 0; i < 7; i++) {
+        const date = new Date(weekStart);
+        date.setDate(date.getDate() + i);
+        dates.push(date);
+    }
+
+    function formatDate(date) {
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}.${month}.${year}`;
+    }
+
+    function renderSchedule(containerId, appointments, tableType) {
+        const calendar = document.getElementById(containerId === 'schedule1' ? 'calendar1' : 'calendar2');
+
+        const header = calendar.querySelector('.calendar-header') || document.createElement('div');
+        header.className = 'calendar-header';
+        header.innerHTML = '<div class="day-header">Godz.</div>';
+        dates.forEach((date, i) => {
+            const dayHeader = document.createElement('div');
+            dayHeader.className = 'day-header';
+            dayHeader.textContent = dayNames[i];
+            header.appendChild(dayHeader);
+        });
+        calendar.innerHTML = '';
+        calendar.appendChild(header);
+
+        hours.forEach(hour => {
+            const row = document.createElement('div');
+            row.className = 'calendar-row';
+
+            const timeCell = document.createElement('div');
+            timeCell.className = 'time-cell';
+            timeCell.textContent = hour;
+            row.appendChild(timeCell);
+
+            dates.forEach((date) => {
+                const cell = document.createElement('div');
+                cell.className = `day-cell ${tableType}`;
+
+                const dateKey = formatDate(date);
+                const timeKey = `${dateKey}-${hour.replace(':', '')}`;
+                const appt = appointments[timeKey];
+
+                if (appt) {
+                    cell.classList.add('available');
+                } else {
+                    cell.classList.add('empty');
+                }
+
+                row.appendChild(cell);
+            });
+
+            calendar.appendChild(row);
+        });
+    }
+
+    function compareSchedules() {
+        renderSchedule('schedule1', originalAppointments, 'old');
+        renderSchedule('schedule2', newAppointments, 'new');
+    }
+
+    function acceptChanges() {
+        if (confirm('Czy na pewno chcesz zaakceptować wszystkie zmiany w harmonogramie?')) {
+            alert('Zmiany zostały zaakceptowane!');
+            // Tutaj można dodać logikę zapisywania zmian
+        }
+    }
+
+    function rejectChanges() {
+        const reason = prompt('Podaj powód odrzucenia zmian:');
+        if (reason !== null && reason.trim() !== '') {
+            alert(`Zmiany zostały odrzucone.\nPowód: ${reason}`);
+            // Tutaj można dodać logikę wysyłania powodu odrzucenia
+        } else if (reason !== null) {
+            alert('Proszę podać powód odrzucenia.');
+        }
+    }
+
+    compareSchedules();
+</script>
+</body>
+</html>
