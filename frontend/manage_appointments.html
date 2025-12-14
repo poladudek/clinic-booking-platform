@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zarządzaj wizytami</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="layout.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f5f7fb;
+            margin: 0;
+        }
+
+        .section-container,
+        .appointment-list {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .appointment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .appointment-card {
+            display: flex;
+            justify-content: space-between;
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            gap: 20px;
+            align-items: center;
+        }
+
+        .appointment-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .appointment-info h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .appointment-info .details {
+            color: #666;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="top-menu">
+        <div class="top-left"><img src="images/logo.png" id="logo" alt="Logo"></div>
+        <div class="top-buttons">
+            <a class="nav-btn nav-link" href="index_patient.html">Strona główna</a>
+            <a class="nav-btn nav-link" href="searchappointment1_patient.html">Umów wizytę</a>
+            <a class="active-btn nav-link" href="manage_appointments.html">Zarządzaj wizytami</a>
+            <button class="nav-btn">Profil</button>
+        </div>
+    </div>
+
+    <div class="login-bar">
+        <div>Zalogowano jako <strong>Marek Nowak (Pacjent)</strong></div>
+        <button class="def-btn">Wyloguj</button>
+    </div>
+
+    <main style="margin-top: 50px;">
+        <div class="section-container">
+            <h1 style="padding-bottom: 20px;">Twoje wizyty</h1>
+
+            <div class="appointment-list">
+
+                <div class="appointment-card">
+                    <div class="appointment-info">
+                        <h2>Konsultacja kardiologiczna</h2>
+                        <div class="details">Lekarz: Dr Anna Kowalska</div>
+                        <div class="details">Data: 2025-12-20 10:00</div>
+                    </div>
+                    <div class="appointment-actions">
+                        <button class="def-btn">Przełóż</button>
+                        <button class="delete-btn">Anuluj</button>
+                    </div>
+                </div>
+
+                <div class="appointment-card">
+                    <div class="appointment-info">
+                        <h2>Badanie laryngologiczne</h2>
+                        <div class="details">Lekarz: Dr Piotr Jaskółka</div>
+                        <div class="details">Data: 2026-01-07 14:00</div>
+                    </div>
+                    <div class="appointment-actions">
+                        <button class="def-btn">Przełóż</button>
+                        <button class="delete-btn">Anuluj</button>
+                    </div>
+                </div>
+
+                <div class="appointment-card">
+                    <div class="appointment-info">
+                        <h2>Konsultacja neurologiczna</h2>
+                        <div class="details">Lekarz: Dr Adam Czerwiński</div>
+                        <div class="details">Data: 2026-03-25 09:30</div>
+                    </div>
+                    <div class="appointment-actions">
+                        <button class="def-btn">Przełóż</button>
+                        <button class="delete-btn">Anuluj</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+</body>
+</html>
