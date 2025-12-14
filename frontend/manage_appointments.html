@@ -85,7 +85,7 @@
                     </div>
                     <div class="appointment-actions">
                         <button class="def-btn">Przełóż</button>
-                        <button class="delete-btn">Anuluj</button>
+                        <button class="delete-btn" onclick="cancelVisit()">Anuluj</button>
                     </div>
                 </div>
 
@@ -97,7 +97,7 @@
                     </div>
                     <div class="appointment-actions">
                         <button class="def-btn">Przełóż</button>
-                        <button class="delete-btn">Anuluj</button>
+                        <button class="delete-btn" onclick="cancelVisit()">Anuluj</button>
                     </div>
                 </div>
 
@@ -109,12 +109,20 @@
                     </div>
                     <div class="appointment-actions">
                         <button class="def-btn">Przełóż</button>
-                        <button class="delete-btn">Anuluj</button>
+                        <button class="delete-btn" onclick="cancelVisit()">Anuluj</button>
                     </div>
                 </div>
 
             </div>
         </div>
     </main>
+    <script>
+    function cancelVisit() {
+    if (confirm('Czy na pewno chcesz odwołać wizytę?')) {
+        alert('Zmiany zostały zaakceptowane!');
+        // dalsza logika przy pisaniu backendu
+        }
+    }
+    </script>
 </body>
 </html>
