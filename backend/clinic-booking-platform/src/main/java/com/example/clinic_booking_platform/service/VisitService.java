@@ -44,4 +44,22 @@ public class VisitService {
         return visitRepository.findAll();
     }
 
+// ----------------- zdobywanie ludzi z bazy danych  do grafikow ------------
+
+    // 1️⃣ Doctor + Patient
+    public List<Visit> getVisitsByDoctorAndPatient(Long doctorId, String pesel) {
+        return visitRepository.findByDoctorIdAndPatientPesel(doctorId, pesel);
+    }
+
+    // 2️⃣ Only Doctor
+    public List<Visit> getVisitsByDoctor(Long doctorId) {
+        return visitRepository.findByDoctorId(doctorId);
+    }
+
+    // 3️⃣ Only Patient
+    public List<Visit> getVisitsByPatient(String pesel) {
+        return visitRepository.findByPatientPesel(pesel);
+    }
+
+
 }
