@@ -1,11 +1,12 @@
 package com.example.clinic_booking_platform.controller;
 
+import com.example.clinic_booking_platform.dto.VisitResponseDTO;
 import com.example.clinic_booking_platform.entity.Visit;
 import com.example.clinic_booking_platform.service.VisitService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/api/visits")
 public class VisitController {
@@ -16,47 +17,37 @@ public class VisitController {
         this.visitService = visitService;
     }
 
-    //TODO to na pewno jest do poprawy, logika jest głupia, zrobimy requesta po prostu
-    // z JSON
-    // Reserve visit
-    @PostMapping("/{visitId}/reserve/{patientId}")
-    public Visit reserveVisit(
-            @PathVariable Long visitId,
-            @PathVariable Long patientId
-    ) {
-        return visitService.reserveVisit(visitId, patientId);
-    }
-
-    // Delete visit
+    // DELETE VISIT
     @DeleteMapping("/{id}")
-    public void deleteVisit(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteVisit(@PathVariable Long id) {
         visitService.deleteVisit(id);
+        return ResponseEntity.noContent().build();
     }
 
+    // GET ALL VISITS
     @GetMapping
-    public List<Visit> getAllVisits() {
-        return visitService.getAllVisits();
+    public ResponseEntity<List<VisitResponseDTO>> getAllVisits() {
+        return ResponseEntity.ok(visitService.getAllVisits());
     }
 
-    // 1️⃣ Doctor + Patient
+    // Doctor + Patient
     @GetMapping("/doctor/{doctorId}/patient/{pesel}")
-    public List<Visit> getVisitsByDoctorAndPatient(
+    public ResponseEntity<List<VisitResponseDTO>> getVisitsByDoctorAndPatient(
             @PathVariable Long doctorId,
             @PathVariable String pesel
     ) {
-        return visitService.getVisitsByDoctorAndPatient(doctorId, pesel);
+        return ResponseEntity.ok(visitService.getVisitsByDoctorAndPatient(doctorId, pesel));
     }
 
-    // 2️⃣ Only Doctor
+    // Only Doctors
     @GetMapping("/doctor/{doctorId}")
-    public List<Visit> getVisitsByDoctor(@PathVariable Long doctorId) {
-        return visitService.getVisitsByDoctor(doctorId);
+    public ResponseEntity<List<VisitResponseDTO>> getVisitsByDoctor(@PathVariable Long doctorId) {
+        return ResponseEntity.ok(visitService.getVisitsByDoctor(doctorId));
     }
 
-    // 3️⃣ Only Patient
+    //get Only Patients
     @GetMapping("/patient/{pesel}")
-    public List<Visit> getVisitsByPatient(@PathVariable String pesel) {
-        return visitService.getVisitsByPatient(pesel);
+    public ResponseEntity<List<VisitResponseDTO>> getVisitsByPatient(@PathVariable String pesel) {
+        return ResponseEntity.ok(visitService.getVisitsByPatient(pesel));
     }
-
 }

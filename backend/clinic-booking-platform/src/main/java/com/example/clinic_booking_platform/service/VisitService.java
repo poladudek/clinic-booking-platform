@@ -1,7 +1,9 @@
 package com.example.clinic_booking_platform.service;
 
+import com.example.clinic_booking_platform.dto.VisitResponseDTO;
 import com.example.clinic_booking_platform.entity.User;
 import com.example.clinic_booking_platform.entity.Visit;
+import com.example.clinic_booking_platform.mapper.VisitMapper;
 import com.example.clinic_booking_platform.repository.UserRepository;
 import com.example.clinic_booking_platform.repository.VisitRepository;
 import org.springframework.stereotype.Service;
@@ -13,53 +15,63 @@ public class VisitService {
 
     private final VisitRepository visitRepository;
     private final UserRepository userRepository;
+    private final VisitMapper visitMapper;
 
-    public VisitService(VisitRepository visitRepository, UserRepository userRepository) {
+    public VisitService(VisitRepository visitRepository, UserRepository userRepository, VisitMapper visitMapper) {
         this.visitRepository = visitRepository;
         this.userRepository = userRepository;
+        this.visitMapper = visitMapper;
     }
 
-    public Visit reserveVisit(Long visitId, Long patientId) {
+    public VisitResponseDTO reserveVisit(Long visitId, Long patientId) {
         Visit visit = visitRepository.findById(visitId)
-                .orElseThrow(() -> new RuntimeException("Visit not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Visit not found"));
 
         if (visit.isReserved()) {
-            throw new RuntimeException("Visit already reserved");
+            throw new IllegalArgumentException("Visit already reserved");
         }
 
         User patient = userRepository.findById(patientId)
-                .orElseThrow(() -> new RuntimeException("Patient not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Patient not found"));
 
         visit.setPatient(patient);
         visit.setReserved(true);
 
-        return visitRepository.save(visit);
+        return visitMapper.toResponse(visitRepository.save(visit));
     }
 
     public void deleteVisit(Long visitId) {
+        if (!visitRepository.existsById(visitId)) {
+            throw new IllegalArgumentException("Visit not found");
+        }
         visitRepository.deleteById(visitId);
     }
 
-    public List<Visit> getAllVisits() {
-        return visitRepository.findAll();
+    public List<VisitResponseDTO> getAllVisits() {
+        return visitRepository.findAll()
+                .stream()
+                .map(visitMapper::toResponse)
+                .toList();
     }
 
-// ----------------- zdobywanie ludzi z bazy danych  do grafikow ------------
-
-    // 1️⃣ Doctor + Patient
-    public List<Visit> getVisitsByDoctorAndPatient(Long doctorId, String pesel) {
-        return visitRepository.findByDoctorIdAndPatientPesel(doctorId, pesel);
+    public List<VisitResponseDTO> getVisitsByDoctorAndPatient(Long doctorId, String pesel) {
+        return visitRepository.findByDoctorIdAndPatientPesel(doctorId, pesel)
+                .stream()
+                .map(visitMapper::toResponse)
+                .toList();
     }
 
-    // 2️⃣ Only Doctor
-    public List<Visit> getVisitsByDoctor(Long doctorId) {
-        return visitRepository.findByDoctorId(doctorId);
+    public List<VisitResponseDTO> getVisitsByDoctor(Long doctorId) {
+        return visitRepository.findByDoctorId(doctorId)
+                .stream()
+                .map(visitMapper::toResponse)
+                .toList();
     }
 
-    // 3️⃣ Only Patient
-    public List<Visit> getVisitsByPatient(String pesel) {
-        return visitRepository.findByPatientPesel(pesel);
+    public List<VisitResponseDTO> getVisitsByPatient(String pesel) {
+        return visitRepository.findByPatientPesel(pesel)
+                .stream()
+                .map(visitMapper::toResponse)
+                .toList();
     }
-
-
 }
