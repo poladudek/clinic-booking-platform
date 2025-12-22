@@ -16,6 +16,8 @@ public class VisitController {
         this.visitService = visitService;
     }
 
+    //TODO to na pewno jest do poprawy, logika jest głupia, zrobimy requesta po prostu
+    // z JSON
     // Reserve visit
     @PostMapping("/{visitId}/reserve/{patientId}")
     public Visit reserveVisit(
@@ -34,6 +36,27 @@ public class VisitController {
     @GetMapping
     public List<Visit> getAllVisits() {
         return visitService.getAllVisits();
+    }
+
+    // 1️⃣ Doctor + Patient
+    @GetMapping("/doctor/{doctorId}/patient/{pesel}")
+    public List<Visit> getVisitsByDoctorAndPatient(
+            @PathVariable Long doctorId,
+            @PathVariable String pesel
+    ) {
+        return visitService.getVisitsByDoctorAndPatient(doctorId, pesel);
+    }
+
+    // 2️⃣ Only Doctor
+    @GetMapping("/doctor/{doctorId}")
+    public List<Visit> getVisitsByDoctor(@PathVariable Long doctorId) {
+        return visitService.getVisitsByDoctor(doctorId);
+    }
+
+    // 3️⃣ Only Patient
+    @GetMapping("/patient/{pesel}")
+    public List<Visit> getVisitsByPatient(@PathVariable String pesel) {
+        return visitService.getVisitsByPatient(pesel);
     }
 
 }
