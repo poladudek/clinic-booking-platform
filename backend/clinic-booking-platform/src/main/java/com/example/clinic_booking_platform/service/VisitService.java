@@ -8,7 +8,10 @@ import com.example.clinic_booking_platform.repository.UserRepository;
 import com.example.clinic_booking_platform.repository.VisitRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class VisitService {
@@ -22,6 +25,21 @@ public class VisitService {
         this.userRepository = userRepository;
         this.visitMapper = visitMapper;
     }
+
+    public VisitResponseDTO addVisit(Long doctorId, LocalDateTime startTime, LocalDateTime endTime) {
+        User doctor = userRepository.findById(doctorId)
+                .orElseThrow(() -> new IllegalArgumentException("Doctor not found"));
+
+        Visit visit = new Visit();
+        visit.setDoctor(doctor);        // ustawiamy obiekt User
+        visit.setStartTime(startTime);
+        visit.setEndTime(endTime);
+        visit.setReserved(false);
+
+        Visit savedVisit = visitRepository.save(visit);
+        return visitMapper.toResponse(savedVisit);
+    }
+
 
     public VisitResponseDTO reserveVisit(Long visitId, Long patientId) {
         Visit visit = visitRepository.findById(visitId)
@@ -53,6 +71,18 @@ public class VisitService {
                 .map(visitMapper::toResponse)
                 .toList();
     }
+
+    public VisitResponseDTO getNextVisit() {
+        LocalDateTime now = LocalDateTime.now();
+
+        Visit nextVisit = visitRepository.findAll().stream()
+                .filter(v -> !v.getStartTime().isBefore(now)) // tylko wizyty w przyszłości
+                .min(Comparator.comparing(Visit::getStartTime)) // najmniejsza data spośród przyszłych
+                .orElseThrow(() -> new NoSuchElementException("Brak nadchodzących wizyt"));
+
+        return visitMapper.toResponse(nextVisit);
+    }
+
 
     public List<VisitResponseDTO> getVisitsByDoctorAndPatient(Long doctorId, String pesel) {
         return visitRepository.findByDoctorIdAndPatientPesel(doctorId, pesel)

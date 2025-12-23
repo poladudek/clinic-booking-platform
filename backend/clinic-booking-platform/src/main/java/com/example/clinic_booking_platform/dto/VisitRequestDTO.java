@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class VisitRequestDTO {
 
+    private Long id;
     private Long doctorId;
     private Long patientId;
     private LocalDateTime startTime;
@@ -12,6 +13,8 @@ public class VisitRequestDTO {
     private String recommendations;
 
     // getters & setters
+    public Long getVisitId() { return id; }
+
     public Long getDoctorId() { return doctorId; }
     public void setDoctorId(Long doctorId) { this.doctorId = doctorId; }
 
